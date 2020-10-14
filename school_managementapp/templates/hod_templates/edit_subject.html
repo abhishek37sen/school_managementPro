@@ -1,0 +1,71 @@
+{% extends 'hod_templates/base_hod.html' %}
+{% load static %}
+{% block sub_title %}Edit Subject |Subject Name : {{ subject.subject }} | Id : {{ student.id }}{% endblock sub_title %}
+{% block main_content %}
+<!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Edit Student</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="/save_edit_subject" method="post">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Subject Name</label>
+                    <input type="text" class="form-control" name="subject_name"  value="{{ subjects.subject }}">
+                  </div>
+                <div class="form-group">
+                    <label >Course</label>
+                    <select class="form-control" name="course_id" >
+                          {% for course in course %}
+                              <option value="{{ course.id }}" >{{ course.id }} -{{ course.course_name }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+                <div class="form-group">
+                    <label >Staff Name</label>
+                    <select class="form-control" name="staff_id" >
+                          {% for staff in staff %}
+                              <option value="{{ staff.admin_id }}" >{{ staff.admin_id}} - {{ staff.admin.first_name }}</option>
+                          {% endfor %}
+                      </select>
+                  </div>
+
+                    <input type="hidden"  name="subject_id"  value={{ subjects.id }}>
+                  <div class="form-group">
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <div class="alert alert-danger" style="margin-top: 10px">{{ message }}</div>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                                <div class="alert alert-success" style="margin-top: 10px">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                  </div>
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+{% endblock main_content %}

@@ -1,0 +1,68 @@
+{% extends 'hod_templates/base_hod.html' %}
+{% load static %}
+{% block sub_title %}Student Feedback{% endblock sub_title %}
+{% block main_content %}
+<!-- Main content -->
+    <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Feedback Table</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Student Id&Name</th>
+                      <th>Send On</th>
+                      <th>Feedback</th>
+                      <th>Replay</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for feedback in feedbacks %}
+                         <form action="save_hod_student_feedback/{{ feedback.id }}" method="post">
+                            {% csrf_token %}
+                            <tr>
+                             <td>{{ feedback.id }}</td>
+                             <td>{{ feedback.student_id_id }}. {{ feedback.student_id.admin.first_name }}</td>
+                             <td>{{ feedback.created_at }}</td>
+                             <td>{{ feedback.feedback }}</td>
+                             <td><input type="text" value="{{ feedback.feedback_reply }}" name="feedback_replay"></td>
+                             <td><input type="submit" class="btn btn-info" value="Replay"></td>
+                         </tr>
+                         </form>
+                      {% endfor %}
+                  </tbody>
+                </table>
+              <div class="form-group">
+                    {% if messages %}
+                        {% for message in messages %}
+                            {% if message.tags == 'error' %}
+                                <div class="alert alert-danger" style="margin-top: 10px">{{ message }}</div>
+                            {% endif %}
+                            {% if message.tags == 'success' %}
+                                <div class="alert alert-success" style="margin-top: 10px">{{ message }}</div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                  </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+    <!-- /.content -->
+{% endblock main_content %}

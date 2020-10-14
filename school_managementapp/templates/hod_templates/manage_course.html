@@ -1,0 +1,50 @@
+{% extends 'hod_templates/base_hod.html' %}
+{% load static %}
+{% block sub_title %}Manage Course{% endblock sub_title %}
+{% block main_content %}
+<!-- Main content -->
+    <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">Course Table</h3>
+
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0" style="height: 300px;">
+                <table class="table table-head-fixed text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Course Name</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      {% for course in course %}
+                         <tr>
+                             <td>{{ course.id }}</td>
+                             <td>{{ course.course_name }}</td>
+                             <td><form action="/edit_course/{{ course.id }}" ><button type="submit" class="btn btn-info">Edit</button></form></td>
+                         </tr>
+                      {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+    <!-- /.content -->
+{% endblock main_content %}
+
+
+
